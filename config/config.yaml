@@ -25,7 +25,7 @@ Recorder:
 
 ASR:
   FunASR:
-    model_dir: models/SenseVoiceSmall
+    model_dir: FunAudioLLM/SenseVoiceSmall
     output_file: tmp/
 
 VAD:
@@ -67,7 +67,7 @@ Player:
 
 Rag:
   doc_path: documents/
-  emb_model: models/bge-small-zh
+  emb_model: BAAI/bge-small-zh-v1.5
   model_name: deepseek-chat
   url: https://api.deepseek.com
   api_key: null
