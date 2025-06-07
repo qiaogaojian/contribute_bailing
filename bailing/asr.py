@@ -38,13 +38,47 @@ class FunASR(ASR):
         self.model_dir = config.get("model_dir")
         self.output_dir = config.get("output_file")
 
-        self.model = AutoModel(
-            model=self.model_dir,
-            vad_kwargs={"max_single_segment_time": 30000},
-            disable_update=True,
-            hub="hf"
-            # device="cuda:0",  # 如果有GPU，可以解开这行并指定设备
-        )
+        # self.model = AutoModel(
+        #     model=self.model_dir,
+        #     vad_kwargs={"max_single_segment_time": 30000},
+        #     disable_update=True,
+        #     hub="hf"
+        #     # device="cuda:0",  # 如果有GPU，可以解开这行并指定设备
+        # )
+
+        home_directory = os.path.expanduser("D:/Cache/model/asr")
+        # https://www.modelscope.cn/models/iic/SenseVoiceSmall
+        asr_model_path = os.path.join(home_directory, "models--FunAudioLLM--SenseVoiceSmall/snapshots/3eb3b4eeffc2f2dde6051b853983753db33e35c3")
+        asr_model_revision = "v2.0.4"
+        vad_model_path = os.path.join(home_directory,"iic/speech_fsmn_vad_zh-cn-16k-common-pytorch")
+        vad_model_revision = "v2.0.4"
+        punc_model_path = os.path.join(home_directory,"iic/punc_ct-transformer_zh-cn-common-vocab272727-pytorch")
+        punc_model_revision = "v2.0.4"
+        # SenseVoiceSmall 不需要说话人分离模型
+        spk_model_path = os.path.join(home_directory,"iic/speech_campplus_sv_zh-cn_16k-common")
+        spk_model_revision = "v2.0.4"
+
+        ngpu = 1
+        device = "cuda"
+        ncpu = 4
+
+        # ASR 模型 - SenseVoiceSmall 不支持时间戳和说话人分离，简化配置
+        self.model = AutoModel(model=asr_model_path,
+                        model_revision=asr_model_revision,
+                        vad_model=vad_model_path,
+                        vad_model_revision=vad_model_revision,
+                        punc_model=punc_model_path,
+                        punc_model_revision=punc_model_revision,
+                        # 移除 spk_model 配置，SenseVoiceSmall 不支持说话人分离
+                        # spk_model=spk_model_path,
+                        # spk_model_revision = spk_model_revision,
+                        ngpu=ngpu,
+                        ncpu=ncpu,
+                        device=device,
+                        disable_pbar=True,
+                        disable_log=True,
+                        disable_update=True
+                        )
 
     def recognizer(self, stream_in_audio):
         try:

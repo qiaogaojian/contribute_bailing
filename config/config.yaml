@@ -21,12 +21,12 @@ selected_module:
 
 Recorder:
   RecorderPyAudio:
-    output_file: tmp/
+    output_file: tmp/recorder_output/
 
 ASR:
   FunASR:
     model_dir: FunAudioLLM/SenseVoiceSmall
-    output_file: tmp/
+    output_file: tmp/asr_output/
 
 VAD:
   SileroVAD:
@@ -38,24 +38,24 @@ LLM:
   OpenAILLM:
     model_name: deepseek-chat
     url: https://api.deepseek.com
-    api_key:
+    api_key: sk-e4ad7f13f96747c38168a0cd8ec346f2
 
 TTS:
   MacTTS:
     voice: Tingting
-    output_file: tmp/
+    output_file: tmp/tts_output/
   EdgeTTS:
     voice: zh-CN-XiaoxiaoNeural
-    output_file: tmp/
+    output_file: tmp/tts_output/
   GTTS:
     lang: zh
-    output_file: tmp/
+    output_file: tmp/tts_output/
   CosyvoiceTTS:
-    output_file: tmp/
+    output_file: tmp/tts_output/
   CHATTTS:
-    output_file: tmp/
+    output_file: tmp/tts_output/
   KOKOROTTS:
-    output_file: tmp/
+    output_file: tmp/tts_output/
     lang: z
     voice: zm_yunyang
 
@@ -70,14 +70,14 @@ Rag:
   emb_model: BAAI/bge-small-zh-v1.5
   model_name: deepseek-chat
   url: https://api.deepseek.com
-  api_key: null
+  api_key: sk-e4ad7f13f96747c38168a0cd8ec346f2
 
 Memory:
   dialogue_history_path: tmp/
   memory_file: tmp/memory.json
   model_name: deepseek-chat
   url: https://api.deepseek.com
-  api_key: null
+  api_key: sk-e4ad7f13f96747c38168a0cd8ec346f2
 
 TaskManager:
   functions_call_name: plugins/function_calls_config.json
