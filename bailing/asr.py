@@ -63,15 +63,13 @@ class FunASR(ASR):
         ncpu = 4
 
         # ASR 模型 - SenseVoiceSmall 不支持时间戳和说话人分离，简化配置
-        self.model = AutoModel(model=asr_model_path,
-                        model_revision=asr_model_revision,
-                        vad_model=vad_model_path,
-                        vad_model_revision=vad_model_revision,
-                        punc_model=punc_model_path,
-                        punc_model_revision=punc_model_revision,
+        self.model = AutoModel(model=asr_model_path,                       model_revision=asr_model_revision,
+                        vad_model=vad_model_path,                          vad_model_revision=vad_model_revision,
+                        punc_model=punc_model_path,                        punc_model_revision=punc_model_revision,
                         # 移除 spk_model 配置，SenseVoiceSmall 不支持说话人分离
                         # spk_model=spk_model_path,
                         # spk_model_revision = spk_model_revision,
+                        vad_kwargs={"max_single_segment_time": 30000},
                         ngpu=ngpu,
                         ncpu=ncpu,
                         device=device,
